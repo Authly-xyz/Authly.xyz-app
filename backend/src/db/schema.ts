@@ -34,8 +34,8 @@ export const globalUserTable = pgTable(
     ...timestamps,
   },
   (table) => [
-    t.uniqueIndex("email_idx").on(table.email),
-    t.uniqueIndex("user_id_idx").on(table.id),
+    t.uniqueIndex("g_email_idx").on(table.email),
+    t.uniqueIndex("g_user_id_idx").on(table.id),
   ]
 );
 
@@ -116,9 +116,9 @@ export const applicationTable = pgTable(
     ...timestamps,
   },
   (table) => [
-    t.uniqueIndex("app_name_idx").on(table.name),
-    t.uniqueIndex("app_id_idx").on(table.id),
-    t.uniqueIndex("app_org_id_idx").on(table.orgId),
+    t.uniqueIndex("a_name_idx").on(table.name),
+    t.uniqueIndex("a_id_idx").on(table.id),
+    t.uniqueIndex("a_org_id_idx").on(table.orgId),
   ]
 );
 
@@ -135,7 +135,7 @@ export const applicationUserRoleTable = pgTable(
     ...timestamps,
   },
   (table) => [
-    t.uniqueIndex("role_name").on(table.role),
+    t.uniqueIndex("role_name_idx").on(table.role),
     t.uniqueIndex("role_id_idx").on(table.id),
     t.uniqueIndex("role_app_id_idx").on(table.applicationId),
   ]
@@ -159,10 +159,10 @@ export const applicationUserTable = pgTable(
     ...timestamps,
   },
   (table) => [
-    t.uniqueIndex("user_email_idx").on(table.email),
-    t.uniqueIndex("user_id_idx").on(table.id),
-    t.uniqueIndex("user_app_id_idx").on(table.applicationId),
-    t.uniqueIndex("user_role_id_idx").on(table.roleId),
+    t.uniqueIndex("a_user_email_idx").on(table.email),
+    t.uniqueIndex("a_user_id_idx").on(table.id),
+    t.uniqueIndex("a_user_app_id_idx").on(table.applicationId),
+    t.uniqueIndex("a_user_role_id_idx").on(table.roleId),
   ]
 );
 
