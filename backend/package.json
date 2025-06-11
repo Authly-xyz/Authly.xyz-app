@@ -1,12 +1,25 @@
 {
   "name": "backend",
-  "module": "index.ts",
+  "description": "Authly is a simple authentication service for your applications.",
+  "author": "Authly Team",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
   "type": "module",
   "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "dev": "bun run src/index.ts --watch"
+  },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/express": "^5.0.3"
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
   }
 }
