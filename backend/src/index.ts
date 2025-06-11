@@ -1,11 +1,11 @@
-import express from 'express';
+import express from "express";
 
 const app = express();
 
 const PORT = Bun.env.PORT || 5000;
 
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
+app.get("/", (req, res) => {
+  res.send("Hello, World! 🌍");
 });
 
 app.listen(PORT, () => {
