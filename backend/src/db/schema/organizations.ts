@@ -3,7 +3,7 @@ import { relations } from "drizzle-orm";
 import { timestamps } from "./utils";
 import { pricePlanTable } from "./pricePlan";
 import { organizationAuthorsTable } from "./organizationAuthors";
-import { applicationsTable } from "./Application";
+import { applicationsTable } from "./application";
 
 // organization table
 export const organizationsTable = pg.pgTable(

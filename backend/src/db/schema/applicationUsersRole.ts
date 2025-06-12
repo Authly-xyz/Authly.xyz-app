@@ -1,7 +1,7 @@
 import * as pg from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { timestamps } from "./utils";
-import { applicationsTable } from "./Application";
+import { applicationsTable } from "./application";
 
 // Application User role table
 export const applicationUsersRoleTable = pg.pgTable(

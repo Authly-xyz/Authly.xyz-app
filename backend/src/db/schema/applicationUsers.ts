@@ -1,7 +1,7 @@
 import * as pg from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { timestamps } from "./utils";
-import { applicationsTable } from "./Application";
+import { applicationsTable } from "./application";
 import { applicationUsersRoleTable } from "./applicationUsersRole";
 
 // Application User table

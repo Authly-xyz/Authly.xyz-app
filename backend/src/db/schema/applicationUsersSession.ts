@@ -1,7 +1,7 @@
 import * as pg from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { timestamps } from "./utils";
-import { applicationUsersTable } from "./ApplicationUsers";
+import { applicationUsersTable } from "./applicationUsers";
 
 // Session table for application users
 export const applicationUsersSessionTable = pg.pgTable(
