@@ -1,6 +1,7 @@
 import * as pg from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { timestamps } from "./utils";
+import { organizationAuthorsTable } from "./organizationAuthors";
 
 // global users table
 export const globalUsersTable = pg.pgTable(
@@ -19,7 +20,10 @@ export const globalUsersTable = pg.pgTable(
 );
 
 // Define relations for the global users table
+// global users can be authors in multiple organizations
 export const globalUsersRelations = relations(
   globalUsersTable,
-  ({ one }) => ({})
+  ({ one, many }) => ({
+    organizationAuthors: many(organizationAuthorsTable),
+  })
 );

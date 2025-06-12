@@ -24,3 +24,20 @@ export const organizationAuthorsTable = pg.pgTable(
     pg.uniqueIndex("org_authors_user_id_idx").on(table.userId),
   ]
 );
+
+// Define relations for the organization authors table with global users and organizations
+// globalUser can be an author in multiple organizations and an organization can have
+// multiple authors
+export const organizationAuthorsRelations = relations(
+  organizationAuthorsTable,
+  ({ one }) => ({
+    globalUser: one(globalUsersTable, {
+      fields: [organizationAuthorsTable.userId],
+      references: [globalUsersTable.id],
+    }),
+    organization: one(organizationsTable, {
+      fields: [organizationAuthorsTable.orgId],
+      references: [organizationsTable.id],
+    }),
+  })
+);
