@@ -1,4 +1,5 @@
 import express, { type Request, type Response } from "express";
+import path from "path";
 import errorHandler from "./middleware/ErrorHandler";
 
 const app = express();
@@ -6,11 +7,13 @@ const app = express();
 app.use(express.json());
 // Middleware to parse URL-encoded bodies
 app.use(express.urlencoded({ extended: true }));
+// use static files from the public directory
+app.use(express.static("public"));
 
 const PORT = Bun.env.PORT || 5000;
 
-app.get("/", (req, res) => {
-  res.send("Welcome to the Authly API! 🚨🌍🔐");
+app.get("/", (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 // Middleware to handle the 404 error
