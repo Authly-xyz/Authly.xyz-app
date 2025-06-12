@@ -3,6 +3,7 @@ import { relations } from "drizzle-orm";
 import { timestamps } from "./utils";
 import { pricePlanTable } from "./pricePlan";
 import { organizationAuthorsTable } from "./organizationAuthors";
+import { applicationsTable } from "./Application";
 
 // organization table
 export const organizationsTable = pg.pgTable(
@@ -30,6 +31,7 @@ export const organizationsTable = pg.pgTable(
 // Define relations for the organization table with the price plan table (one-to-one)
 // one organization has one price plan
 // organization can have multiple authors
+// organization can have multiple applications
 export const organizationRelations = relations(
   organizationsTable,
   ({ one, many }) => ({
@@ -38,5 +40,6 @@ export const organizationRelations = relations(
       references: [pricePlanTable.id],
     }),
     authors: many(organizationAuthorsTable),
+    applications: many(applicationsTable),
   })
 );
