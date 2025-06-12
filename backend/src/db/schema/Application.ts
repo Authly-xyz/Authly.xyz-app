@@ -2,6 +2,7 @@ import * as pg from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 import { timestamps } from "./utils";
 import { organizationsTable } from "./organizations";
+import { applicationUsersRoleTable } from "./applicationUsersRole";
 
 export const authTypeEnum = pg.pgEnum("auth_type", ["OAUTH", "EMAIL", "BOTH"]);
 
@@ -31,9 +32,14 @@ export const applicationsTable = pg.pgTable(
 
 // Define relations for the application table with the organization table (many-to-one)
 // one application belongs to one organization
-export const applicationRelations = relations(applicationsTable, ({ one }) => ({
-  organization: one(organizationsTable, {
-    fields: [applicationsTable.orgId],
-    references: [organizationsTable.id],
-  }),
-}));
+// one application can have multiple user roles
+export const applicationRelations = relations(
+  applicationsTable,
+  ({ one, many }) => ({
+    organization: one(organizationsTable, {
+      fields: [applicationsTable.orgId],
+      references: [organizationsTable.id],
+    }),
+    roles: many(applicationUsersRoleTable),
+  })
+);
