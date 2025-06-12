@@ -5,7 +5,7 @@ import { globalUsersTable } from "./globalUsers";
 
 // session table for global users
 export const globalUserSessionTable = pg.pgTable(
-  "global_users_sessions",
+  "global_user_sessions",
   {
     id: pg.uuid("id").primaryKey().defaultRandom(),
     userId: pg

@@ -6,7 +6,7 @@ import { applicationUsersRoleTable } from "./applicationUsersRole";
 
 // Application User table
 export const applicationUsersTable = pg.pgTable(
-  "application_user",
+  "application_users",
   {
     id: pg.uuid("id").primaryKey().defaultRandom(),
     applicationId: pg
