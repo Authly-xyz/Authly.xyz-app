@@ -27,7 +27,8 @@
     // paths and aliases
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@db/*": ["src/db/*"],
     }
   },
   "include": ["src/**/*", "test/**/*"],
