@@ -1,6 +1,7 @@
 import express, { type Request, type Response } from "express";
 import path from "path";
 import errorHandler from "./middleware/ErrorHandler";
+import mainRouter from "./route";
 
 const app = express();
 // Middleware to parse JSON bodies
@@ -25,6 +26,8 @@ app.get("/", (req: Request, res: Response) => {
 app.get("/auth-test", (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, "public", "auth.html"));
 });
+// Use the main router for all other routes
+app.use("/api/v1", mainRouter);
 
 // Middleware to handle the 404 error
 app.use((req: Request, res: Response) => {

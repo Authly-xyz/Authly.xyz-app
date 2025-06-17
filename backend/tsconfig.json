@@ -29,6 +29,8 @@
     "paths": {
       "@/*": ["src/*"],
       "@db/*": ["src/db/*"],
+      "@modules/*": ["src/modules/*"],
+      "@middleware/*": ["src/middleware/*"],
     }
   },
   "include": ["src/**/*", "test/**/*"],
