@@ -29,6 +29,30 @@ services:
             - node_modules/
         - action: rebuild
           path: ./backend/package.json
+  
+  frontend:
+    build: ./frontend
+    image: authly-frontend-i:1.0
+    env_file:
+      - frontend/.env
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=development
+    container_name: authly-frontend-c
+    depends_on:
+      - backend
+    command: bun run dev
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /app/
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: ./frontend/package.json
 
 volumes:
   redis_data:
