@@ -3,15 +3,13 @@ import { type Request, type Response } from "express";
 
 // logout controller
 export const logoutController = async (req: Request, res: Response) => {
-  // @ts-ignore
-  await destroyGlobalUserSession(req.user?.sessionId as string);
-  // @ts-ignore
-  console.log("session destroyed for user:", req.user?.sessionId);
-  req.logout((err) => {
-    if (err) {
-      return res.status(500).json({ message: "Logout failed", error: err });
-    }
-    res.clearCookie("authly.sid"); // Clear the session cookie
+  const session = req.cookies["authly.sid"];
+  if (session) {
+    console.log("Logging out user with session:", session);
+    await destroyGlobalUserSession(session.userId);
+    res.clearCookie("authly.sid");
     res.status(200).json({ message: "Logout successful" });
-  });
+  } else {
+    res.status(400).json({ message: "No session found" });
+  }
 };

@@ -61,6 +61,11 @@ export const createGlobalUserSession = async (
 ) => {
   try {
     // TODO: use Redis for caching sessions
+    // steps
+    // 1. check id the session already exists in redis
+    // 2. if it exists, clear the session from redis
+    // 3. create a new session in the redis cache
+    // 4. create a new session in the database ✅
     // Check if the user exists
     const user = await findGlobalUserById(userId);
     if (!user) {
@@ -96,6 +101,7 @@ export const createGlobalUserSession = async (
 // find global user session by id
 export const findGlobalUserSessionByUserId = async (userId: string) => {
   try {
+    //TODO: use Redis for caching sessions
     const session = await db
       .select()
       .from(globalUserSessionTable)
@@ -108,11 +114,12 @@ export const findGlobalUserSessionByUserId = async (userId: string) => {
 };
 
 // destroy global user session
-export const destroyGlobalUserSession = async (sessionId: string) => {
+export const destroyGlobalUserSession = async (userId: string) => {
   try {
+    // TODO: clear session from Redis if used
     await db
       .delete(globalUserSessionTable)
-      .where(eq(globalUserSessionTable.id, sessionId));
+      .where(eq(globalUserSessionTable.userId, userId));
   } catch (error) {
     console.error("Error destroying user session:", error);
   }
