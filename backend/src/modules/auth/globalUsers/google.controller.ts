@@ -6,7 +6,7 @@ import {
   findGlobalUserByEmail,
   createGlobalUser,
   findGlobalUserById,
-  findGlobalUserSessionByUserId,
+  findGlobalUserSessionById,
   createGlobalUserSession,
 } from "@db/utils/globalUser.db.utils";
 
@@ -89,26 +89,16 @@ export const googleAuthCallbackController = async (
   passport.authenticate(
     "google",
     { failureRedirect: "/auth-test" }, // TODO: change this to redirect to the frontend URL
-    (err, user, info) => {
+    async (err, user, info) => {
       if (err || !user) {
         return res.status(401).json({
           message: "Authentication failed",
-          error: err.message || info,
+          error: err?.message || info,
         });
       }
-      // Successful authentication, redirect or send a response
-      req.logIn(user, async (err) => {
-        if (err) {
-          return res
-            .status(500)
-            .json({ message: "Login failed", error: err.message });
-        }
-        console.log("User logged in:", user.id);
-        // Create a session for the user
-        await createGlobalUserSession(user.id, req, res);
-        // TODO: change this to redirect to the frontend URL
-        return res.redirect("/auth-success"); // Redirect to the frontend URL
-      });
+      // Create a session for the user and set the cookie
+      await createGlobalUserSession(user.id, req, res);
+      return res.redirect("/auth-success");
     }
   )(req, res);
 };

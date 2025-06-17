@@ -82,15 +82,7 @@ export const createGlobalUserSession = async (
       })
       .returning();
     // Create session cookie
-    createSessionCookie(res, {
-      userId: user.id,
-      sessionId: session[0].id,
-      valid: session[0].valid,
-      role: Array.isArray(user.role)
-        ? (user.role as string[])
-        : [user.role as string],
-      permissions: user.permissions || ["read", "write"], // Default permissions if not set
-    });
+    createSessionCookie(res, session[0].id);
     return session[0];
   } catch (error) {
     console.error("Error creating user session:", error);
@@ -99,13 +91,13 @@ export const createGlobalUserSession = async (
 };
 
 // find global user session by id
-export const findGlobalUserSessionByUserId = async (userId: string) => {
+export const findGlobalUserSessionById = async (sessionId: string) => {
   try {
     //TODO: use Redis for caching sessions
     const session = await db
       .select()
       .from(globalUserSessionTable)
-      .where(eq(globalUserSessionTable.userId, userId));
+      .where(eq(globalUserSessionTable.id, sessionId));
     return session[0];
   } catch (error) {
     console.error("Error finding user session by id:", error);
@@ -114,12 +106,12 @@ export const findGlobalUserSessionByUserId = async (userId: string) => {
 };
 
 // destroy global user session
-export const destroyGlobalUserSession = async (userId: string) => {
+export const destroyGlobalUserSession = async (sessionId: string) => {
   try {
     // TODO: clear session from Redis if used
     await db
       .delete(globalUserSessionTable)
-      .where(eq(globalUserSessionTable.userId, userId));
+      .where(eq(globalUserSessionTable.id, sessionId));
   } catch (error) {
     console.error("Error destroying user session:", error);
   }

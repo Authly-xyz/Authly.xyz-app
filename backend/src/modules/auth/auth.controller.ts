@@ -3,10 +3,10 @@ import { type Request, type Response } from "express";
 
 // logout controller
 export const logoutController = async (req: Request, res: Response) => {
-  const session = req.cookies["authly.sid"];
-  if (session) {
-    console.log("Logging out user with session:", session);
-    await destroyGlobalUserSession(session.userId);
+  const sessionId = req.cookies["authly.sid"];
+  if (sessionId) {
+    console.log("Logging out user with session:", sessionId);
+    await destroyGlobalUserSession(sessionId);
     res.clearCookie("authly.sid");
     res.status(200).json({ message: "Logout successful" });
   } else {

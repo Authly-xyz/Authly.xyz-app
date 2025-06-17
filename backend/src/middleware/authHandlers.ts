@@ -1,5 +1,5 @@
 import {
-  findGlobalUserSessionByUserId,
+  findGlobalUserSessionById,
   findGlobalUserById,
 } from "@/db/utils/globalUser.db.utils";
 import e, { type Request, type Response, type NextFunction } from "express";
@@ -10,12 +10,12 @@ export const isAuthenticated = async (
   res: Response,
   next: NextFunction
 ) => {
-  const session = req.cookies["authly.sid"];
-  if (!session) {
+  const sessionId = req.cookies["authly.sid"];
+  if (!sessionId) {
     res.status(401).json({ message: "No session" });
     return;
   }
-  const sessionUser = await findGlobalUserSessionByUserId(session);
+  const sessionUser = await findGlobalUserSessionById(sessionId);
   if (sessionUser && sessionUser.valid) {
     const user = await findGlobalUserById(sessionUser.userId);
     if (user) {
