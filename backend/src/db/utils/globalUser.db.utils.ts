@@ -1,9 +1,11 @@
-import type { Request } from "express";
+import type { Request, Response } from "express";
 import { eq } from "drizzle-orm";
 import { db } from "../index";
 
 import { globalUsersTable } from "../schema/globalUsers";
 import { globalUserSessionTable } from "../schema/globalUserSession";
+import { createSessionCookie } from "../../utils/session";
+import { isArray } from "util";
 
 // find user by email
 export const findGlobalUserByEmail = async (email: string) => {
@@ -52,7 +54,11 @@ export const createGlobalUser = async (userData: {
 };
 
 // create global user session
-export const createGlobalUserSession = async (userId: string, req: Request) => {
+export const createGlobalUserSession = async (
+  userId: string,
+  req: Request,
+  res: Response
+) => {
   try {
     // TODO: use Redis for caching sessions
     // Check if the user exists
@@ -70,6 +76,16 @@ export const createGlobalUserSession = async (userId: string, req: Request) => {
         ipAddress: req.ip || "0.0.0.0",
       })
       .returning();
+    // Create session cookie
+    createSessionCookie(res, {
+      userId: user.id,
+      sessionId: session[0].id,
+      valid: session[0].valid,
+      role: Array.isArray(user.role)
+        ? (user.role as string[])
+        : [user.role as string],
+      permissions: user.permissions || ["read", "write"], // Default permissions if not set
+    });
     return session[0];
   } catch (error) {
     console.error("Error creating user session:", error);
