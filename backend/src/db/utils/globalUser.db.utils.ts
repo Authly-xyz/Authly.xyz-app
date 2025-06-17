@@ -5,7 +5,6 @@ import { db } from "../index";
 import { globalUsersTable } from "../schema/globalUsers";
 import { globalUserSessionTable } from "../schema/globalUserSession";
 import { createSessionCookie } from "../../utils/session";
-import { isArray } from "util";
 
 // find user by email
 export const findGlobalUserByEmail = async (email: string) => {
