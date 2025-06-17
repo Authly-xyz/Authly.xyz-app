@@ -1,5 +1,6 @@
 import { FlatCompat } from "@eslint/eslintrc";
 import tseslint from "typescript-eslint";
+import pluginQuery from "@tanstack/eslint-plugin-query";
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
@@ -16,6 +17,7 @@ export default tseslint.config(
       ...tseslint.configs.recommended,
       ...tseslint.configs.recommendedTypeChecked,
       ...tseslint.configs.stylisticTypeChecked,
+      ...pluginQuery.configs["flat/recommended"],
     ],
     rules: {
       "@typescript-eslint/array-type": "off",
