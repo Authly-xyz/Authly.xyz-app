@@ -9,9 +9,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // use static files from the public directory
 app.use(express.static("public"));
-
+// TypeScript declaration for Bun environment variables
+declare module "bun" {
+  interface Env {
+    PORT: string;
+  }
+}
+// Set the port from environment variables or default to 5000
 const PORT = Bun.env.PORT || 5000;
-
+// Serve the index.html file for the root route
 app.get("/", (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
