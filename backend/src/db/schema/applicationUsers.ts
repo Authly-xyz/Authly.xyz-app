@@ -4,6 +4,15 @@ import { timestamps } from "./utils";
 import { applicationsTable } from "./application";
 import { applicationUsersRoleTable } from "./applicationUsersRole";
 
+// enums
+export const applicationUsersAuthProvider = pg.pgEnum("a_auth_provider", [
+  "google",
+  "github",
+  "facebook",
+  "twitter",
+  "email",
+]);
+
 // Application User table
 export const applicationUsersTable = pg.pgTable(
   "application_users",
@@ -20,6 +29,9 @@ export const applicationUsersTable = pg.pgTable(
     name: pg.varchar("name", { length: 256 }).notNull(),
     email: pg.varchar("email", { length: 256 }).notNull().unique(),
     emailVerified: pg.boolean("email_verified").default(false).notNull(),
+    authProvider: applicationUsersAuthProvider("auth_provider").notNull(),
+    providerId: pg.text("provider_id").notNull(),
+    profilePicture: pg.text("profile_picture"),
     lastLogIn: pg.timestamp("last_log_in").defaultNow().notNull(),
     ...timestamps,
   },
@@ -28,6 +40,7 @@ export const applicationUsersTable = pg.pgTable(
     pg.uniqueIndex("a_user_id_idx").on(table.id),
     pg.uniqueIndex("a_user_app_id_idx").on(table.applicationId),
     pg.uniqueIndex("a_user_role_id_idx").on(table.roleId),
+    pg.uniqueIndex("a_user_provider_id_idx").on(table.providerId),
   ]
 );
 
