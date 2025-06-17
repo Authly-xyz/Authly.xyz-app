@@ -5,8 +5,6 @@ import passport from "passport";
 import {
   findGlobalUserByEmail,
   createGlobalUser,
-  findGlobalUserById,
-  findGlobalUserSessionById,
   createGlobalUserSession,
 } from "@db/utils/globalUser.db.utils";
 
@@ -47,30 +45,6 @@ passport.use(
     }
   )
 );
-
-// Serialize and deserialize user
-// @ts-ignore
-// passport.serializeUser((user, callback) => callback(null, user.id));
-// Deserialize user
-// @ts-ignore
-// passport.deserializeUser(async (id, callback) => {
-//   const user = await findGlobalUserById(id as string);
-//   if (!user) {
-//     return callback(new Error("User not found"), null);
-//   }
-//   const currentSession = await findGlobalUserSessionByUserId(id as string);
-//   if (!currentSession) {
-//     return callback(new Error("Session not found"), null);
-//   }
-//   const sessionUser = {
-//     id: user?.id,
-//     role: user?.role ?? "user", // Default role for global users
-//     permissions: user?.permissions ?? ["read", "write"], // Default permissions for global users
-//     valid: currentSession?.valid ?? false, // Session validity
-//     sessionId: currentSession?.id ?? null, // Session ID
-//   };
-//   callback(null, sessionUser);
-// });
 
 // google auth controller
 export const googleAuthController = async (req: Request, res: Response) => {

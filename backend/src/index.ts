@@ -1,6 +1,5 @@
 import express, { type Request, type Response } from "express";
 import path from "path";
-import session from "express-session";
 import passport from "passport";
 import cookieParser from "cookie-parser";
 
@@ -22,20 +21,6 @@ declare module "bun" {
 }
 // init the express app
 const app = express();
-// set the trust proxy setting
-// if (Bun.env.NODE_ENV === "production") {
-//   app.set("trust proxy", 1); // Trust first proxy, useful if behind a reverse proxy like Nginx or Heroku
-// }
-// // Set up session middleware
-// app.use(
-//   session({
-//     secret: Bun.env.SESSION_SECRET,
-//     resave: false,
-//     saveUninitialized: true,
-//     name: "authly.sid", // Name of the session cookie
-//     cookie: { secure: Bun.env.NODE_ENV === "production" }, // Set to true if using https
-//   })
-// );
 // Middleware to parse JSON bodies
 app.use(express.json());
 // Middleware to parse URL-encoded bodies
@@ -46,8 +31,6 @@ app.use(express.static("public"));
 app.use(passport.initialize());
 // Initialize cookie parser for handling cookies
 app.use(cookieParser());
-// Initialize passport session management
-// app.use(passport.session());
 // Set the port from environment variables or default to 5000
 const PORT = Bun.env.PORT || 5000;
 // Serve the index.html file for the root route
