@@ -11,7 +11,11 @@ import mainRouter from "./route";
 declare module "bun" {
   interface Env {
     PORT: string;
+    Backend_URL: string;
+    FRONTEND_URL: string;
     SESSION_SECRET: string;
+    GOOGLE_CLIENT_ID: string;
+    GOOGLE_CLIENT_SECRET: string;
   }
 }
 // init the express app
@@ -48,6 +52,10 @@ app.get("/", (req: Request, res: Response) => {
 // Temporary route for authentication testing
 app.get("/auth-test", (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, "public", "auth.html"));
+});
+// Temporary route for testing the success authentication
+app.get("/auth-success", (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, "public", "auth-success.html"));
 });
 // Use the main router for all other routes
 app.use("/api/v1", mainRouter);
