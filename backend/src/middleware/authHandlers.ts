@@ -9,9 +9,9 @@ export const isAuthenticated = async (
 ) => {
   const sessionUser = await findGlobalUserSessionByUserId(
     // @ts-ignore
-    req.user?.sessionId as string
+    req.user?.id as string
   );
-  if (req.isAuthenticated() && sessionUser?.valid) {
+  if (sessionUser?.valid) {
     return next();
   }
   res.status(401).json({
