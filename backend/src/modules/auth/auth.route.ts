@@ -9,6 +9,7 @@ import {
   googleAuthCallbackController,
   twitterAuthController,
 } from "@modules/auth/globalUsers";
+import { logoutController } from "./auth.controller";
 
 const router = express.Router();
 
@@ -19,6 +20,8 @@ router.post("/register/facebook", facebookAuthController);
 router.post("/register/github", githubAuthController);
 router.post("/register/twitter", twitterAuthController);
 router.post("/register/email", emailAuthController);
+// Logout route for global users
+router.post("/logout", logoutController);
 
 // This routes handles users/application level users authentication
 // E.g. router.post("/register/org_name/App_name/google", googleAuthController);

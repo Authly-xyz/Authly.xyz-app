@@ -7,6 +7,8 @@
 </head>
 <body>
     <h1 id="auth-status">Not Authenticated</h1>
+    <br />
+    <button id="logout-button" disabled onclick="logout()">Logout</button>
     <script>
         try {
             const res = fetch("/api/v1/me")
@@ -17,6 +19,8 @@
                     document.getElementById("auth-status").textContent = "Authenticated";
                     document.body.innerHTML += JSON.stringify(user, null, 2);
                     document.body.innerHTML += `<p>ID: ${user.id}!</p>`;
+                    // Enable the logout button
+                    document.getElementById("logout-button").disabled = false;
 
                 } else {
                     document.getElementById("auth-status").textContent = "Not Authenticated";
@@ -29,6 +33,22 @@
             console.error("Error fetching user data:", error);
             document.getElementById("auth-status").textContent = "Error";
             document.body.innerHTML += `<p>Error fetching user data: ${error.message}</p>`;
+        }
+
+        function logout() {
+            fetch("/api/v1/auth/logout", { method: "POST" })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = "/auth-test";
+                    } else {
+                        console.error("Logout failed");
+                        document.body.innerHTML += `<p>Logout failed. Please try again.</p>`;
+                    }
+                })
+                .catch(error => {
+                    console.error("Error during logout:", error);
+                    document.body.innerHTML += `<p>Error during logout: ${error.message}</p>`;
+                });
         }
     </script>
 </body>

@@ -1,7 +1,9 @@
-import { db } from "../index";
+import type { Request } from "express";
 import { eq } from "drizzle-orm";
+import { db } from "../index";
 
 import { globalUsersTable } from "../schema/globalUsers";
+import { globalUserSessionTable } from "../schema/globalUserSession";
 
 // find user by email
 export const findGlobalUserByEmail = async (email: string) => {
@@ -46,5 +48,56 @@ export const createGlobalUser = async (userData: {
   } catch (error) {
     console.error("Error creating user:", error);
     return null;
+  }
+};
+
+// create global user session
+export const createGlobalUserSession = async (userId: string, req: Request) => {
+  try {
+    // TODO: use Redis for caching sessions
+    // Check if the user exists
+    const user = await findGlobalUserById(userId);
+    if (!user) {
+      console.error("User not found");
+      return null;
+    }
+    const session = await db
+      .insert(globalUserSessionTable)
+      .values({
+        userId: userId,
+        valid: true,
+        userAgent: req.headers["user-agent"] || "unknown",
+        ipAddress: req.ip || "0.0.0.0",
+      })
+      .returning();
+    return session[0];
+  } catch (error) {
+    console.error("Error creating user session:", error);
+    return null;
+  }
+};
+
+// find global user session by id
+export const findGlobalUserSessionByUserId = async (userId: string) => {
+  try {
+    const session = await db
+      .select()
+      .from(globalUserSessionTable)
+      .where(eq(globalUserSessionTable.userId, userId));
+    return session[0];
+  } catch (error) {
+    console.error("Error finding user session by id:", error);
+    return null;
+  }
+};
+
+// destroy global user session
+export const destroyGlobalUserSession = async (sessionId: string) => {
+  try {
+    await db
+      .delete(globalUserSessionTable)
+      .where(eq(globalUserSessionTable.id, sessionId));
+  } catch (error) {
+    console.error("Error destroying user session:", error);
   }
 };

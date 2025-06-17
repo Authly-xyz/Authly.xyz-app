@@ -31,6 +31,7 @@ app.use(
     secret: Bun.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
+    name: "authly.sid", // Name of the session cookie
     cookie: { secure: Bun.env.NODE_ENV === "production" }, // Set to true if using https
   })
 );

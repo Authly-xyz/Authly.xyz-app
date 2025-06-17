@@ -11,6 +11,14 @@ export const globalUsersAuthProvider = pg.pgEnum("g_auth_provider", [
   "twitter",
   "email",
 ]);
+// global users roles and permissions
+export const globalUsersRole = pg.pgEnum("g_user_role", ["user", "admin"]);
+// global users permissions
+export const globalUsersPermissions = pg.pgEnum("g_user_permissions", [
+  "read",
+  "write",
+  "delete",
+]);
 
 // global users table
 export const globalUsersTable = pg.pgTable(
@@ -23,6 +31,10 @@ export const globalUsersTable = pg.pgTable(
     authProvider: globalUsersAuthProvider("auth_provider").notNull(),
     providerId: pg.text("provider_id").notNull(),
     profilePicture: pg.text("profile_picture"),
+    role: globalUsersRole("role").default("user").notNull(),
+    permissions: globalUsersPermissions("permissions").array().default(
+      ["read", "write", "delete"] // Default permissions for global users
+    ),
     ...timestamps,
   },
   (table) => [

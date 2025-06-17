@@ -22,6 +22,8 @@ import {
   globalUsersRelations,
   globalUsersTable,
   globalUsersAuthProvider,
+  globalUsersRole,
+  globalUsersPermissions,
 } from "./globalUsers";
 import {
   globalUserSessionRelations,
@@ -52,6 +54,8 @@ export {
   globalUsersRelations,
   globalUsersTable,
   globalUsersAuthProvider,
+  globalUsersRole,
+  globalUsersPermissions,
   globalUserSessionRelations,
   globalUserSessionTable,
   organizationsTable,
