@@ -1,7 +1,7 @@
 export default function RegisterPage() {
   return (
-    <main>
+    <section>
       <h1>Welcome to the register page!</h1>
-    </main>
+    </section>
   );
 }
