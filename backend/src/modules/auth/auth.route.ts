@@ -6,6 +6,7 @@ import {
   facebookAuthController,
   githubAuthController,
   googleAuthController,
+  googleAuthCallbackController,
   twitterAuthController,
 } from "@modules/auth/globalUsers";
 
@@ -13,6 +14,7 @@ const router = express.Router();
 
 // This routes handles users/Organization level users authentication
 router.post("/register/google", googleAuthController);
+router.get("/register/google/callback", googleAuthCallbackController);
 router.post("/register/facebook", facebookAuthController);
 router.post("/register/github", githubAuthController);
 router.post("/register/twitter", twitterAuthController);

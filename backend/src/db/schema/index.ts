@@ -9,7 +9,7 @@ import {
   applicationUsersRelations,
   applicationUsersTable,
   applicationUsersAuthProvider,
-} from "./ApplicationUsers";
+} from "./applicationUsers";
 import {
   applicationUsersRoleTable,
   applicationUsersRoleRelations,

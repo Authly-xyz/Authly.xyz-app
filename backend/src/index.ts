@@ -11,7 +11,7 @@ import mainRouter from "./route";
 declare module "bun" {
   interface Env {
     PORT: string;
-    Backend_URL: string;
+    BACKEND_URL: string;
     FRONTEND_URL: string;
     SESSION_SECRET: string;
     GOOGLE_CLIENT_ID: string;

@@ -6,7 +6,33 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Authentication Successful</h1>
-    <p>You have successfully authenticated</p>
+    <h1 id="auth-status">Not Authenticated</h1>
+    <script>
+        try {
+            const res = fetch("/api/v1/me")
+            const data = res.then(response => response.json());
+            data.then(({user, message}) => {
+                if (user) {
+                    console.log(user);
+                    document.getElementById("auth-status").textContent = "Authenticated";
+                    document.body.innerHTML += `<p>${message}</p>`;
+                    document.body.innerHTML += `<p>ID: ${user.id}!</p>`;
+                    document.body.innerHTML += `<p>Welcome, ${user.name}!</p>`;
+                    document.body.innerHTML += `<p>Email: ${user.email}</p>`;
+                    document.body.innerHTML += `<p>provider: ${user.provider}</p>`;
+
+                } else {
+                    document.getElementById("auth-status").textContent = "Not Authenticated";
+                    console.error("User information could not be retrieved.");
+                    document.body.innerHTML += `<p>User information could not be retrieved.</p>`;
+                }
+            });
+
+        } catch (error) {
+            console.error("Error fetching user data:", error);
+            document.getElementById("auth-status").textContent = "Error";
+            document.body.innerHTML += `<p>Error fetching user data: ${error.message}</p>`;
+        }
+    </script>
 </body>
 </html>
