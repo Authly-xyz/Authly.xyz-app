@@ -1,6 +1,7 @@
 import express, { type Request, type Response } from "express";
 import path from "path";
 import session from "express-session";
+import passport from "passport";
 
 // other imports
 import errorHandler from "./middleware/ErrorHandler";
@@ -34,6 +35,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // use static files from the public directory
 app.use(express.static("public"));
+// initialize passport for authentication
+app.use(passport.initialize());
+// Initialize passport session management
+app.use(passport.session());
 // Set the port from environment variables or default to 5000
 const PORT = Bun.env.PORT || 5000;
 // Serve the index.html file for the root route
