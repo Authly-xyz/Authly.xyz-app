@@ -7,6 +7,7 @@ import {
   createGlobalUser,
   findGlobalUserById,
 } from "@db/utils/globalUser.db.utils";
+import { permission } from "process";
 
 // Configure Google OAuth strategy
 passport.use(
@@ -53,7 +54,12 @@ passport.serializeUser((user, callback) => callback(null, user.id));
 // @ts-ignore
 passport.deserializeUser(async (id, callback) => {
   const user = await findGlobalUserById(id as string);
-  callback(null, user);
+  const sessionUser = {
+    id: user?.id,
+    role: ["user"], // Default role for global users
+    permissions: ["read", "write"], // Default permissions for global users
+  };
+  callback(null, sessionUser);
 });
 
 // google auth controller

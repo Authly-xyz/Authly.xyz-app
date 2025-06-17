@@ -15,11 +15,8 @@
                 if (user) {
                     console.log(user);
                     document.getElementById("auth-status").textContent = "Authenticated";
-                    document.body.innerHTML += `<p>${message}</p>`;
+                    document.body.innerHTML += JSON.stringify(user, null, 2);
                     document.body.innerHTML += `<p>ID: ${user.id}!</p>`;
-                    document.body.innerHTML += `<p>Welcome, ${user.name}!</p>`;
-                    document.body.innerHTML += `<p>Email: ${user.email}</p>`;
-                    document.body.innerHTML += `<p>provider: ${user.provider}</p>`;
 
                 } else {
                     document.getElementById("auth-status").textContent = "Not Authenticated";

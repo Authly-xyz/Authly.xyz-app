@@ -11,6 +11,7 @@ import mainRouter from "./route";
 declare module "bun" {
   interface Env {
     PORT: string;
+    LOCAL_TESTING: boolean;
     BACKEND_URL: string;
     FRONTEND_URL: string;
     SESSION_SECRET: string;
