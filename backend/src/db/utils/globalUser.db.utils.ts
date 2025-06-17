@@ -4,7 +4,8 @@ import { db } from "../index";
 
 import { globalUsersTable } from "../schema/globalUsers";
 import { globalUserSessionTable } from "../schema/globalUserSession";
-import { createSessionCookie } from "../../utils/session";
+import { createSessionCookie } from "@utils/session";
+import redis from "@/utils/redis";
 
 // find user by email
 export const findGlobalUserByEmail = async (email: string) => {
@@ -59,18 +60,25 @@ export const createGlobalUserSession = async (
   res: Response
 ) => {
   try {
-    // TODO: use Redis for caching sessions
-    // steps
-    // 1. check id the session already exists in redis
-    // 2. if it exists, clear the session from redis
-    // 3. create a new session in the redis cache
-    // 4. create a new session in the database ✅
     // Check if the user exists
     const user = await findGlobalUserById(userId);
     if (!user) {
       console.error("User not found");
       return null;
     }
+    // check if the user already has an active session
+    const existingSession = await db
+      .select()
+      .from(globalUserSessionTable)
+      .where(eq(globalUserSessionTable.userId, userId));
+
+    // If an active session exists, clear it
+    if (existingSession[0]) {
+      await db
+        .delete(globalUserSessionTable)
+        .where(eq(globalUserSessionTable.id, existingSession[0].id));
+    }
+    // Create a new session
     const session = await db
       .insert(globalUserSessionTable)
       .values({
@@ -80,6 +88,20 @@ export const createGlobalUserSession = async (
         ipAddress: req.ip || "0.0.0.0",
       })
       .returning();
+    // check if session is in redis (g_session stand for global session)
+    const cachedSession = await redis.get(`g_session:${session[0].id}`);
+    if (cachedSession) {
+      // clear the session from redis
+      await redis.del(`g_session:${session[0].id}`);
+    } else {
+      // Store in Redis with a TTL (e.g., 1 day = 86400 seconds)
+      await redis.set(
+        `g_session:${session[0].id}`,
+        JSON.stringify(session[0]),
+        "EX",
+        86400
+      );
+    }
     // Create session cookie
     createSessionCookie(res, session[0].id);
     return session[0];
@@ -92,7 +114,14 @@ export const createGlobalUserSession = async (
 // find global user session by id
 export const findGlobalUserSessionById = async (sessionId: string) => {
   try {
-    //TODO: use Redis for caching sessions
+    // Check if the session exists in Redis
+    const cachedSession = await redis.get(`g_session:${sessionId}`);
+    if (cachedSession) {
+      console.log("Session found in Redis:", cachedSession);
+      return JSON.parse(cachedSession);
+    }
+    // If not found in Redis, query the database
+    console.log("Session not found in Redis, querying database...");
     const session = await db
       .select()
       .from(globalUserSessionTable)
@@ -107,7 +136,13 @@ export const findGlobalUserSessionById = async (sessionId: string) => {
 // destroy global user session
 export const destroyGlobalUserSession = async (sessionId: string) => {
   try {
-    // TODO: clear session from Redis if used
+    const cachedSession = await redis.get(`g_session:${sessionId}`);
+    if (cachedSession) {
+      console.log("Session found in Redis, deleting...", sessionId);
+      await redis.del(`g_session:${sessionId}`);
+    }
+    // Delete the session from the database
+    console.log("Destroying user session with ID:", sessionId);
     await db
       .delete(globalUserSessionTable)
       .where(eq(globalUserSessionTable.id, sessionId));

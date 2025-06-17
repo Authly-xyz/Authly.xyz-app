@@ -31,6 +31,7 @@
       "@db/*": ["src/db/*"],
       "@modules/*": ["src/modules/*"],
       "@middleware/*": ["src/middleware/*"],
+      "@utils/*": ["src/utils/*"],
     }
   },
   "include": ["src/**/*", "test/**/*"],
