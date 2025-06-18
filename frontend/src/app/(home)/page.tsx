@@ -5,6 +5,7 @@ import { MorphingText } from "@/components/magicui/morphing-text";
 import { cn } from "@/lib/utils";
 import { ArrowRightIcon } from "lucide-react";
 import SectionTwo from "./_sections/SectionTwo";
+import { Testimonial } from "./_sections/Testimonial";
 
 export default function HomePage() {
   const texts = [
@@ -47,8 +48,12 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
+      {/* Pricing */}
+      // TODO: pricing section
       {/* section two */}
       <SectionTwo />
+      {/* <Testimonial /> */}
+      <Testimonial />
     </>
   );
 }
