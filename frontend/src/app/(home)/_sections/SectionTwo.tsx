@@ -1,7 +1,9 @@
 import React from "react";
+import Image from "next/image";
 import { ScriptCopyBtn } from "@/components/magicui/script-copy-btn";
 import { NumberTicker } from "@/components/magicui/number-ticker";
 import { AvatarCircles } from "@/components/magicui/avatar-circles";
+import { Marquee } from "@/components/eldoraui/marquee";
 
 const SectionTwo = () => {
   const customCommandMap = {
@@ -36,8 +38,39 @@ const SectionTwo = () => {
       profileUrl: "https://github.com/itsarghyadas",
     },
   ];
+  const companies = [
+    {
+      name: "Google",
+      url: "https://res.cloudinary.com/eldoraui/image/upload/v1734066341/Google_fav2wl.svg",
+    },
+    {
+      name: "GitHub",
+      url: "https://res.cloudinary.com/eldoraui/image/upload/v1734066341/GitHub_honend.svg",
+    },
+    {
+      name: "Amazon",
+      url: "https://res.cloudinary.com/eldoraui/image/upload/v1734066178/Amazon_wckqtv.svg",
+    },
+    {
+      name: "Netflix",
+      url: "https://res.cloudinary.com/eldoraui/image/upload/v1734066179/Netflix_skrjyn.svg",
+    },
+    {
+      name: "YouTube",
+      url: "https://res.cloudinary.com/eldoraui/image/upload/v1734066180/YouTube_wknngk.svg",
+    },
+    {
+      name: "Instagram",
+      url: "https://res.cloudinary.com/eldoraui/image/upload/v1734066178/Instagram_mo5ttl.svg",
+    },
+    {
+      name: "Spotify",
+      url: "https://res.cloudinary.com/eldoraui/image/upload/v1734066180/Spotify_ocrrnm.svg",
+    },
+  ];
   return (
     <section className="min-h-screen w-full">
+      {/* header */}
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-5 md:flex-row md:justify-between md:gap-20">
         {/* code snippet */}
         <div className="flex flex-col gap-4">
@@ -89,6 +122,28 @@ const SectionTwo = () => {
               <span>customers</span>
             </div>
           </div>
+        </div>
+      </div>
+      {/* companies */}
+      <div className="container mx-auto mt-20 px-4 py-12 md:px-8">
+        <h3 className="text-center text-sm font-semibold text-gray-500">
+          TRUSTED BY LEADING TEAMS
+        </h3>
+        <div className="relative mt-6">
+          <Marquee className="max-w-full [--duration:40s]" pauseOnHover={true}>
+            {companies.map((company, idx) => (
+              <Image
+                key={idx}
+                width={112}
+                height={40}
+                src={company.url}
+                className="h-10 w-28 opacity-50 dark:brightness-0 dark:grayscale dark:invert"
+                alt={company.name}
+              />
+            ))}
+          </Marquee>
+          <div className="from-background pointer-events-none absolute inset-y-0 left-0 h-full w-1/3 bg-gradient-to-r"></div>
+          <div className="from-background pointer-events-none absolute inset-y-0 right-0 h-full w-1/3 bg-gradient-to-l"></div>
         </div>
       </div>
     </section>

@@ -59,7 +59,9 @@
   to {
     background-position: var(--bg-size, 300%) 0;
     }
-  }}
+  }
+    
+}
 
 :root {
   --radius: 0.625rem;
@@ -142,5 +144,35 @@
 @layer components {
   .max-screen {
     @apply mx-auto min-h-screen max-w-[1500px] px-2;
+  }
+}
+
+@layer utilities {
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+
+  @keyframes marquee-vertical {
+    from {
+      transform: translateY(0);
+    }
+
+    to {
+      transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee var(--duration) linear infinite;
+  }
+
+  .animate-marquee-vertical {
+    animation: marquee-vertical var(--duration) linear infinite;
   }
 }
