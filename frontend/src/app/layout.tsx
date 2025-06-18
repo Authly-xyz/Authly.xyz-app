@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 import { TanstackProvider } from "@/providers/TanstackProvider";
+import { ThemeProvider } from "@/providers/ThemeProvider";
 
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
@@ -26,9 +27,14 @@ export default function RootLayout({
     >
       <body>
         <TanstackProvider>
-          <main className="mx-auto min-h-screen max-w-[1400px] px-2">
-            {children}
-          </main>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <main className="max-screen">{children}</main>
+          </ThemeProvider>
         </TanstackProvider>
       </body>
     </html>

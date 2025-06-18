@@ -123,3 +123,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .max-screen {
+    @apply mx-auto min-h-screen max-w-[1400px] px-2;
+  }
+}
