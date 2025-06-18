@@ -1,10 +1,25 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { AnimatedShinyText } from "@/components/magicui/animated-shiny-text";
+import { MorphingText } from "@/components/magicui/morphing-text";
+import { ScriptCopyBtn } from "@/components/magicui/script-copy-btn";
 import { cn } from "@/lib/utils";
 import { ArrowRightIcon } from "lucide-react";
 
 export default function HomePage() {
+  const texts = [
+    "Welcome to Authly!",
+    "Your go-to authentication provider for React apps.",
+    "Get started with Authly today!",
+    "Experience seamless authentication.",
+    "Secure your applications effortlessly.",
+  ];
+  const customCommandMap = {
+    npm: "npm create next-app@latest",
+    yarn: "yarn create next-app@latest",
+    pnpm: "pnpm create next-app@latest",
+    bun: "bun create next-app@latest",
+  };
   return (
     <section className="flex min-h-screen w-full flex-col items-center justify-center gap-4">
       {/* animated shiny text */}
@@ -20,9 +35,10 @@ export default function HomePage() {
       </div>
       {/* main content */}
       <div className="flex flex-col items-center gap-4">
-        <h1 className="text-center text-4xl font-bold md:text-5xl">
-          Welcome to Authly!
-        </h1>
+        <MorphingText
+          texts={texts}
+          className="mb-3 text-center text-4xl font-bold md:text-5xl lg:text-6xl"
+        />
         <p className="text-muted-foreground text-center text-lg md:text-3xl">
           Your go-to authentication provider for React apps. Pay as you grow.
         </p>
@@ -30,6 +46,13 @@ export default function HomePage() {
           Choose the best plan for your business. Change plans whenever you need
           to.
         </p>
+        <ScriptCopyBtn
+          showMultiplePackageOptions={true}
+          codeLanguage="shell"
+          lightTheme="nord"
+          darkTheme="vitesse-dark"
+          commandMap={customCommandMap}
+        />
         <Link href="/register">
           <Button size={"lg"}>Get Started</Button>
         </Link>
