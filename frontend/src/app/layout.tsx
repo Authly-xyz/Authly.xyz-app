@@ -20,13 +20,13 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${geist.variable}`} suppressHydrationWarning>
-      <TanstackProvider>
-        <body>
+      <body>
+        <TanstackProvider>
           <main className="mx-auto min-h-screen max-w-[1400px] px-2">
             {children}
           </main>
-        </body>
-      </TanstackProvider>
+        </TanstackProvider>
+      </body>
     </html>
   );
 }

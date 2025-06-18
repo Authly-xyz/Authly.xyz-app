@@ -11,7 +11,7 @@ import { FcGoogle } from "react-icons/fc";
 
 export default function RegisterPage() {
   return (
-    <section className="container mx-auto max-w-xl">
+    <div className="container mx-auto max-w-xl">
       <Card>
         <CardHeader>
           <CardTitle className="text-center text-xl lg:text-2xl">
@@ -35,6 +35,6 @@ export default function RegisterPage() {
           </p>
         </CardFooter>
       </Card>
-    </section>
+    </div>
   );
 }
