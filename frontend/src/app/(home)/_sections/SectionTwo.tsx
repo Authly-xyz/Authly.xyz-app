@@ -4,6 +4,8 @@ import { ScriptCopyBtn } from "@/components/magicui/script-copy-btn";
 import { NumberTicker } from "@/components/magicui/number-ticker";
 import { AvatarCircles } from "@/components/magicui/avatar-circles";
 import { Marquee } from "@/components/eldoraui/marquee";
+import { TerminalDemo } from "./TerminalDemo";
+import { BentoGridCard } from "./BentoGridCard";
 
 const SectionTwo = () => {
   const customCommandMap = {
@@ -123,6 +125,11 @@ const SectionTwo = () => {
             </div>
           </div>
         </div>
+      </div>
+      {/* terminal and Bento Grid*/}
+      <div className="mx-auto mt-20 flex max-w-7xl flex-col items-center gap-5 md:flex-row md:justify-between md:gap-20">
+        <TerminalDemo />
+        <BentoGridCard />
       </div>
       {/* companies */}
       <div className="container mx-auto mt-20 px-4 py-12 md:px-8">
