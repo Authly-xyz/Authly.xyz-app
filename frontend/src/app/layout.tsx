@@ -19,7 +19,11 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${geist.variable} bg-gray-50`}
+      suppressHydrationWarning
+    >
       <body>
         <TanstackProvider>
           <main className="mx-auto min-h-screen max-w-[1400px] px-2">
