@@ -9,11 +9,9 @@ const SectionTwo = () => {
     bun: "bun create next-app@latest",
   };
   return (
-    <section className="flex min-h-screen w-full flex-col gap-5">
+    <section className="flex min-h-screen w-full flex-col items-start justify-start">
       <div className="flex flex-col gap-4">
-        <h2 className="text-center text-2xl font-bold">
-          Get Started with Authly
-        </h2>
+        <h2 className="text-2xl font-bold">Get Started with Authly</h2>
         <ScriptCopyBtn
           showMultiplePackageOptions={true}
           codeLanguage="shell"

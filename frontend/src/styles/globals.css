@@ -141,6 +141,6 @@
 
 @layer components {
   .max-screen {
-    @apply mx-auto min-h-screen max-w-[1400px] px-2;
+    @apply mx-auto min-h-screen max-w-[1500px] px-2;
   }
 }

@@ -4,7 +4,7 @@ import { AnimatedShinyText } from "@/components/magicui/animated-shiny-text";
 import { MorphingText } from "@/components/magicui/morphing-text";
 import { cn } from "@/lib/utils";
 import { ArrowRightIcon } from "lucide-react";
-import SectionTwo from "./_sections/sectionTwo";
+import SectionTwo from "./_sections/SectionTwo";
 
 export default function HomePage() {
   const texts = [
