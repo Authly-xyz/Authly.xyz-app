@@ -1,12 +1,32 @@
+"use client";
+
 import React from "react";
 import { Logo } from "./Logo";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 import { ModeToggle } from "./ModeToggle";
+import { cn } from "@/lib/utils";
 
 const Header = () => {
+  const [isScrolled, setIsScrolled] = React.useState(false);
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
-    <header className="sticky top-0 z-50 flex w-full items-center justify-between py-3">
+    <header
+      className={cn(
+        "sticky top-0 z-50 flex w-full items-center justify-between py-3",
+        isScrolled && "bg-transparent backdrop-blur-md",
+        // isScrolled && "bg-black/50 backdrop-blur-md",
+      )}
+    >
       {/* Logo */}
       <Logo classname="text-2xl" />
       {/* Navigation Links */}
